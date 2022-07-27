@@ -1,0 +1,76 @@
+body {
+  font-family: 'Inter' !important;
+}
+
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.header {
+  position: fixed; top: 0; left: 0; height: 50px; width: 100%; line-height: 50px; z-index: 999; text-align: center; color: white; font-size: 20px;
+}
+
+.main {
+  padding-bottom: 45px;
+}
+
+.footer {
+  position: fixed; bottom: 0; left: 0; height: 45px; width: 100%; line-height: 45px; z-index: 999; text-align: center; color: white; font-size: 18px;
+}
+
+.active {
+  background: #3330E4;
+  color: white !important;
+  border-radius: 4px;
+}
+
+.loader-row {
+  padding: 12px;
+  justify-content: center;
+}
+
+.champz-table-wrapper {
+  width: 100%;
+  border-radius: 12px;
+  margin: 0px auto;
+  border: 1px solid #DADADA;
+}
+
+.champz-table {
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none !important;
+  width: 100%;
+}
+
+.champz-table tr:nth-child(even) {
+  background: #f2f2f2 !important;
+}
+
+.champz-table tr:not(:last-child) {
+  border-bottom: 1px solid #D5D8DF;
+}
+
+.champz-table tbody {
+  color: black;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+th,
+td {
+  border: none !important;
+  text-align: center !important;
+  padding: 12px 12px !important;
+}
+
+th {
+  padding: 12px !important;
+}
+
+thead {
+  background: #3330E4;
+  color: white;
+}
