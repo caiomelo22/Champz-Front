@@ -88,8 +88,6 @@ export default {
         .get("participant")
         .then((response) => {
           this.participants = response.data;
-        })
-        .catch((err) => {
         });
       this.participantsLoading = false;
     },
@@ -100,8 +98,7 @@ export default {
         .then((response) => {
           this.positions = response.data;
           this.get_players_by_position_algorithm(this.positions[0].id);
-        })
-        .catch((err) => { });
+        });
     },
     async get_players_by_position_algorithm(idPosition) {
       this.playersLoading = true;
@@ -109,8 +106,7 @@ export default {
         .get(`player?position=${idPosition}`)
         .then((response) => {
           this.selectedPosition = response.data;
-        })
-        .catch((err) => { });
+        });
       this.playersLoading = false;
     },
     async get_players_by_team(participant, idTeam) {
@@ -121,8 +117,7 @@ export default {
         .get(`player?team_participant=${idTeam}`)
         .then((response) => {
           this.selectedTeam = response.data;
-        })
-        .catch((err) => { });
+        });
       this.participants[index].team_loading_att = false;
       this.participantTeamDialog = true;
     },
@@ -132,16 +127,14 @@ export default {
         .get(`team?league=${pl.id}`)
         .then((response) => {
           this.plTeams = response.data;
-        })
-        .catch((err) => { });
+        });
     },
     async get_leagues() {
       await this.$axios
         .get("league")
         .then((response) => {
           this.leagues = response.data;
-        })
-        .catch((err) => { });
+        });
     },
     get_player(player) {
       this.currentPlayer = player;
@@ -155,8 +148,7 @@ export default {
         .delete(url)
         .then((response) => {
           this.get_players_by_position_algorithm(this.positions[this.tab].id);
-        })
-        .catch((err) => { });
+        });
     },
     async remove_buy(player) {
       this.update_participant_budget(player, true);
@@ -170,8 +162,7 @@ export default {
               this.selectedTeam.splice(index, 1);
             }
           }
-        })
-        .catch((err) => { });
+        });
     },
     update_participant_budget(player, add) {
       let index = this.participants
@@ -206,25 +197,15 @@ export default {
     },
     async generate_transfers_file() {
       let url = "transfers";
-      await this.$axios
-        .post(url)
-        .then((response) => { })
-        .catch((err) => { });
+      await this.$axios.post(url);
     },
     async generate_teams_file() {
       let url = "participants_teams";
-      await this.$axios
-        .post(url)
-        .then((response) => { })
-        .catch((err) => { });
+      await this.$axios.post(url);
     },
     async generate_players_file() {
       let url = "champz_players";
-      await this.$axios
-        .post(url)
-        .then((response) => { })
-        .catch((err) => { });
+      await this.$axios.post(url);
     },
   },
-  computed: {},
 };

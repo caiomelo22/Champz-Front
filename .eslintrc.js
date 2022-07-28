@@ -34,6 +34,8 @@ module.exports = {
     'prefer-const': 'off',
     'vue/html-indent': 'off',
     'vue/attributes-order': 'off',
+    'vue/first-attribute-linebreak': 'off',
+    'vue/html-closing-bracket-newline': 'off',
     indent: 'off'
   }
 }

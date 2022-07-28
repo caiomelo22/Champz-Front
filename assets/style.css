@@ -59,18 +59,18 @@ body {
   font-size: 12px;
 }
 
-th,
-td {
+.champz-table th,
+.champz-table td {
   border: none !important;
   text-align: center !important;
   padding: 12px 12px !important;
 }
 
-th {
+.champz-table th {
   padding: 12px !important;
 }
 
-thead {
+.champz-table thead {
   background: #3330E4;
   color: white;
 }
