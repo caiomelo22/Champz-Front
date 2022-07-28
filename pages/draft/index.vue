@@ -5,7 +5,7 @@
         <v-row>
           <v-card style="width: 100%">
             <v-card-text>
-              <h5 style="font-weight: bold !important; color: black">Set budget</h5>
+              <h5>Set budget</h5>
               <v-text-field class="mt-2" min="0" v-model="genericBudget" hide-details dense outlined flat>
               </v-text-field>
             </v-card-text>
@@ -14,12 +14,12 @@
         <v-row style="margin-top: 32px">
           <v-card style="width: 100%">
             <v-card-title>
-              <h3 style="font-weight: bold !important">List of participants</h3>
+              <h3>List of participants</h3>
               <v-spacer></v-spacer>
               <v-icon large color="green" @click="open_participant_dialog(null)">mdi-plus</v-icon>
             </v-card-title>
             <v-card-text>
-              <v-row v-if="participants_loading" class="loader-row">
+              <v-row v-if="participantsLoading" class="loader-row">
                 <v-progress-circular indeterminate size="20" color="#3330E4"></v-progress-circular>
               </v-row>
               <div class="champz-table-wrapper" v-else>
@@ -70,7 +70,7 @@
         <v-row>
           <v-card style="width: 100%">
             <v-card-title>
-              <h3 style="font-weight: bold !important">List of Players</h3>
+              <h3>List of Players</h3>
             </v-card-title>
             <v-card-text>
               <v-tabs v-model="tab" color="#3330E4">
@@ -78,8 +78,8 @@
                   {{ p.name }}
                 </v-tab>
               </v-tabs>
-              <v-row justify="center" v-if="players_loading" class="my-6 pa-4">
-                <v-progress-circular indeterminate size="15"></v-progress-circular>
+              <v-row justify="center" v-if="playersLoading" class="my-6 pa-4">
+                <v-progress-circular indeterminate size="15" color="primary"></v-progress-circular>
               </v-row>
               <div class="champz-table-wrapper mt-4" v-else-if="tab != -1">
                 <table class="champz-table">
@@ -108,7 +108,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="player in selected_position"
+                    <tr v-for="player in selectedPosition"
                       :key="`${player.id}-${player.team_participant}-${player.value}`">
                       <td class="champzFont">{{ player.id }}</td>
                       <td class="champzFont">
@@ -167,206 +167,21 @@
       <br />
     <br />-->
     <!-- Add Participant Modal -->
-    <v-dialog v-if="addParticipantModal" v-model="addParticipantModal" width="700px" max-width="100%">
+    <v-dialog v-if="addParticipantDialog" v-model="addParticipantDialog" width="700px" max-width="100%">
       <AddParticipant :participant-prop="newParticipant" :pl-teams="plTeams" @close="reset_participant_dialog"
         @update="participant_added" />
     </v-dialog>
     <!-- Buy Player Modal -->
-    <v-dialog v-if="buy_player_modal" v-model="buy_player_modal" width="40%" persistent>
-      <v-card>
-        <v-card-title>
-          <h5>BUY PLAYER</h5>
-        </v-card-title>
-        <v-card-text>
-          <div class="text-center" style="display: flex; justify-content: center; position: relative">
-            <div class="card-info">
-              <div class="card-left-info">
-                <span style="
-                    margin-bottom: 10px;
-                    font-size: 40px;
-                    font-weight: bold;
-                    z-index: 2;
-                  ">{{ current_player.overall }}</span>
-                <span style="font-size: 25px; z-index: 2">{{
-                    current_player.specific_position
-                }}</span>
-                <img style="width: 60px; z-index: 2; margin: auto"
-                  :src="gs.get_nation_image_path(current_player.nation.image_path)" />
-                <img style="width: 60px; z-index: 2; margin: auto" :src="
-                  gs.get_team_image_path(current_player.team_origin.image_path)
-                " />
-              </div>
-              <img :src="gs.get_player_image_path(current_player.image_path)" style="
-                  max-height: 160px;
-                  z-index: 2;
-                  position: absolute;
-                  top: 100px;
-                  left: -28px;
-                " />
-              <div class="card-name">
-                <span style="font-weight: 700; font-size: 17px">{{
-                    current_player.name
-                }}</span>
-              </div>
-              <div class="card-stats">
-                <div class="vertical-divisor"></div>
-                <div class="card-stats-left">
-                  <v-row no-gutters>
-                    <span class="mr-1 card-stat-value">{{
-                        current_player.pace
-                    }}</span><span class="mr-1 card-stat-name">PAC</span>
-                  </v-row>
-                  <v-row no-gutters>
-                    <span class="mr-1 card-stat-value">{{
-                        current_player.shooting
-                    }}</span><span class="mr-1 card-stat-name">SHO</span>
-                  </v-row>
-                  <v-row no-gutters>
-                    <span class="mr-1 card-stat-value">{{
-                        current_player.passing
-                    }}</span><span class="mr-1 card-stat-name">PAS</span>
-                  </v-row>
-                </div>
-                <div class="card-stats-right text-end">
-                  <v-row no-gutters>
-                    <span class="mr-1 card-stat-value">{{
-                        current_player.dribbling
-                    }}</span><span class="mr-1 card-stat-name">DRI</span>
-                  </v-row>
-                  <v-row no-gutters>
-                    <span class="mr-1 card-stat-value">{{
-                        current_player.defending
-                    }}</span><span class="mr-1 card-stat-name">DEF</span>
-                  </v-row>
-                  <v-row no-gutters>
-                    <span class="mr-1 card-stat-value">{{
-                        current_player.physical
-                    }}</span><span class="mr-1 card-stat-name">PHY</span>
-                  </v-row>
-                </div>
-              </div>
-            </div>
-            <img src="~/assets/gold.png" style="height: 500px; z-index: 1" />
-          </div>
-          <form v-on:submit.prevent="buy_player()">
-            <v-text-field type="number" v-model="current_player.value" label="Value" prefix="$"></v-text-field>
-            <v-combobox v-model="participant_selected" :items="participants" item-text="name" @change="
-              current_player.team_participant = participant_selected.team
-            " label="Participant" outlined dense></v-combobox>
-            <v-card-actions style="display: flex; justify-content: flex-end">
-              <v-btn color="red" @click="reset_player_modal">Cancel</v-btn>
-              <v-btn type="submit" color="green" :loading="updating_player">Save changes</v-btn>
-            </v-card-actions>
-          </form>
-        </v-card-text>
-      </v-card>
+    <v-dialog v-if="buyPlayerDialog" v-model="buyPlayerDialog" width="700px" max-width="100%" persistent>
+      <BuyPlayer :participants="participants" :current-player="currentPlayer" @close="reset_player_modal" @update="player_updated" />
     </v-dialog>
     <!-- Show participant team Modal -->
-    <v-dialog v-model="participant_team_modal" width="60%">
-      <v-card>
-        <v-card-title>
-          <h5>{{ current_participant.name }}'s Team</h5>
-        </v-card-title>
-        <v-card-text>
-          <v-simple-table>
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Overall</th>
-                <th scope="col">Price</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(player, i) in selected_team" :key="i">
-                <th scope="row">{{ player.id }}</th>
-                <td>{{ player.name }}</td>
-                <td>{{ player.overall }}</td>
-                <td>{{ player.value }}</td>
-                <td>
-                  <v-btn color="red" @click="remove_buy(player)">
-                    Remove Buy
-                  </v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </v-simple-table>
-        </v-card-text>
-      </v-card>
+    <v-dialog v-model="participantTeamDialog" width="700px" max-width="100%">
+      <ParticipantTeam :selected-team="selectedTeam" :current-participant="currentParticipant" @remove="remove_buy" />
     </v-dialog>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.card-info {
-  position: absolute;
-}
-
-.card-stat-name {
-  font-weight: 400;
-}
-
-.card-stat-value {
-  font-weight: bold;
-}
-
-.vertical-divisor {
-  height: 100%;
-  width: 1px;
-  top: 65%;
-  opacity: 0.8;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  background-color: #645215;
-}
-
-.card-name {
-  z-index: 2;
-  position: absolute;
-  top: 261px;
-  left: -137px;
-  width: 273px;
-}
-
-.card-stats-left {
-  position: absolute;
-  width: 50%;
-  bottom: 16px;
-  padding-left: 50px;
-  font-size: 20px;
-}
-
-.card-stats-right {
-  position: absolute;
-  width: 50%;
-  bottom: 16px;
-  right: 0;
-  padding-left: 20px;
-  font-size: 20px;
-}
-
-.card-stats {
-  z-index: 2;
-  position: absolute;
-  top: 300px;
-  left: -136px;
-  height: 102px;
-  width: 273px;
-}
-
-.card-left-info {
-  z-index: 2;
-  display: grid;
-  margin-left: -120px;
-  margin-top: 63px;
-}
-
-.champzFont {
-  font-size: 18px;
-  font-weight: 500;
-  font-family: system-ui;
-}
 </style>
 <script src="./index"></script>

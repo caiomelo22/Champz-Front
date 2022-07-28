@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <Main>
+  <v-app class="app">
+    <Main class="main">
       <NavBar />
       <Nuxt />
     </Main>
@@ -19,3 +19,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+.app {
+  background: #F0EBE3;
+}
+.main {
+  margin-bottom: 12px;
+}
+</style>

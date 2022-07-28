@@ -74,3 +74,83 @@ thead {
   background: #3330E4;
   color: white;
 }
+
+.v-card {
+  -webkit-box-shadow: 2px 2px 21px -10px #3330E4 !important; 
+  box-shadow: 2px 2px 21px -10px #3330E4 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 900 !important;
+  color: #3330E4;
+}
+
+.card-info {
+  position: absolute;
+}
+
+.card-stat-name {
+  font-weight: 400;
+}
+
+.card-stat-value {
+  font-weight: bold;
+}
+
+.vertical-divisor {
+  height: 100%;
+  width: 1px;
+  top: 65%;
+  opacity: 0.8;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background-color: #645215;
+}
+
+.card-name {
+  z-index: 2;
+  position: absolute;
+  top: 261px;
+  left: -137px;
+  width: 273px;
+}
+
+.card-stats-left {
+  position: absolute;
+  width: 50%;
+  bottom: 16px;
+  padding-left: 50px;
+  font-size: 20px;
+}
+
+.card-stats-right {
+  position: absolute;
+  width: 50%;
+  bottom: 16px;
+  right: 0;
+  padding-left: 20px;
+  font-size: 20px;
+}
+
+.card-stats {
+  z-index: 2;
+  position: absolute;
+  top: 300px;
+  left: -136px;
+  height: 102px;
+  width: 273px;
+}
+
+.card-left-info {
+  z-index: 2;
+  display: grid;
+  margin-left: -120px;
+  margin-top: 63px;
+}
+
+.champzFont {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: system-ui;
+}
